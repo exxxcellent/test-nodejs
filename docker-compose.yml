@@ -1,13 +1,4 @@
 services:
-    app:
-        container_name: app
-        build: .
-        ports:
-            - 3000:${APP_PORT}
-        # restart: always
-        depends_on:
-            - postgres
-
     postgres:
         container_name: postgres
         image: postgres:17
@@ -20,6 +11,16 @@ services:
             - 5432:${POSTGRES_PORT}
         volumes:
             - postgres_data:/var/lib/postgresql/data
+    app:
+        container_name: app
+        build: .
+        ports:
+            - 3000:${APP_PORT}
+        restart: always
+        environment:
+            DATABASE_URL: ${DATABASE_URL}
+        depends_on:
+            - postgres
 
 volumes:
     postgres_data:

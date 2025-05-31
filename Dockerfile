@@ -8,14 +8,17 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install
 
-# Copy Prisma schema
+# Copy application code
+COPY . .
+
+# Copy Prisma schema    
 COPY prisma ./prisma
 
 # Run prisma generate
 RUN npx prisma generate
 
-# Copy application code
-COPY . .
+# Run prisma migration
+RUN /bin/sh -c npx prisma migrate deploy
 
 # Run applcation
 CMD ["npm", "run", "start"]
