@@ -17,9 +17,6 @@ COPY prisma ./prisma
 # Run prisma generate
 RUN npx prisma generate
 
-# Run prisma migration
-RUN /bin/sh -c npx prisma migrate deploy
-
 # Run applcation
 CMD ["npm", "run", "start"]
 
